@@ -1,4 +1,0 @@
-INFO: [VRFC 10-2263] Analyzing SystemVerilog file "L:/Projects/arbiter/arbiter_iwrr/rtl/arbiter_iwrr.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module arbiter_iwrr
-INFO: [VRFC 10-2263] Analyzing SystemVerilog file "L:/Projects/arbiter/arbiter_iwrr/tb/arbiter_iwrr_tb.sv" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module arbiter_iwrr_tb
