@@ -35,7 +35,7 @@ module arbiter_iwrr
     wire    [P_REQUESTER_NUM - 1:0] prior_grant         [0:P_REQUESTER_NUM - 1];
     // reg declaration
     reg     [3:0]                   arbiter_state_r;    // arbiter state
-    reg     [MAX_WEIGHT_W - 1:0]    [P_REQUESTER_NUM - 1:0] r_weight_r          ;    // requester weight
+    reg     [MAX_WEIGHT_W - 1:0]    r_weight_r          [P_REQUESTER_NUM - 1:0];    // requester weight
     reg     [P_REQUESTER_NUM - 1:0] grant_r;            // grant register
     reg     [REQ_NUM_W - 1:0]       interleaving_ptr_r; // interleaving pointer register 
     // combinational logic
@@ -51,14 +51,6 @@ module arbiter_iwrr
             );
         end
     endgenerate
-//    round_comp_detector #(
-//        .P_REQUESTER_NUM(P_REQUESTER_NUM),
-//        .P_WEIGHT_MAX(P_REQUESTER_WEIGHT[0])
-//    )round_comp_detector(
-//        .req_weight(r_weight_r),
-//        .grant(grant_r),
-//        .round_completed(round_completed)
-//    );
     assign interleaving_ptr_incr = (interleaving_ptr_r == (P_REQUESTER_NUM - 1)) ? 0 : interleaving_ptr_r + 1'b1;
     assign grant_valid[P_REQUESTER_NUM - 1:0] = grant_r[P_REQUESTER_NUM - 1:0];
     generate
@@ -93,10 +85,6 @@ module arbiter_iwrr
 					interleaving_ptr_nxt = interleaving_ptr_incr;
 				    // Reset all grants
 				    grant_nxt[(P_REQUESTER_NUM-1):0] = {P_REQUESTER_NUM{1'b0}};
-				    // Update weight 
-//                    for(int i = 0; i < P_REQUESTER_NUM; i = i + 1) begin
-//                    r_weight_nxt[i] = (round_completed) ? P_REQUESTER_WEIGHT[i] : ((grant_r[i]) ? r_weight_decr[i] : r_weight_r[i]);
-//                    end
                 end
                 // Finish 1 round
                 for(int i = 0; i < P_REQUESTER_NUM; i = i + 1) begin

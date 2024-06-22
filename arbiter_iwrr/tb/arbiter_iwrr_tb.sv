@@ -1,8 +1,8 @@
 module arbiter_iwrr_tb;    
     // Requester number
-    localparam P_REQUESTER_NUM                                  = 3;
+    localparam P_REQUESTER_NUM                                  = 4;
     // Weight value of each requester (RCM: requester_weight[0] = max_weight)
-    localparam int P_REQUESTER_WEIGHT   [0:P_REQUESTER_NUM-1]   = {5, 3, 2};
+    localparam int P_REQUESTER_WEIGHT   [0:P_REQUESTER_NUM-1]   = {10, 5, 3, 2};
 
     reg                             clk;
     reg                             rst_n;
@@ -43,6 +43,12 @@ module arbiter_iwrr_tb;
         request <= 0;
         request[0] <= 1'b1;
         grant_ready <= 1'b1;
+        #100;
+        request <= 0;
+        request[0] <= 1'b1;
+        request[1] <= 1'b1;
+        #100;
+        grant_ready <= 1'b0;
         #200; $finish;
     end
 endmodule
