@@ -40,7 +40,8 @@ module arbiter_iwrr_tb;
         request <= {P_REQUESTER_NUM{1'b1}};
         grant_ready <= 1'b1;
         #100;
-        request <= {1'b1, 1'b0, 1'b0};
+        request <= 0;
+        request[0] <= 1'b1;
         grant_ready <= 1'b1;
         #200; $finish;
     end
