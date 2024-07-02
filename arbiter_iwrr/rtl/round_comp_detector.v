@@ -6,6 +6,7 @@ module round_comp_detector
 (
     // Input declaration
     input   [0:P_REQUESTER_NUM*P_WEIGHT_W - 1]  req_weight_i,
+    input   [P_REQUESTER_NUM - 1:0]             req_weight_remain_i,
     input   [P_REQUESTER_NUM - 1:0]             grant_i,
     input   [P_WEIGHT_W - 1:0]                  num_grant_req_i,
     // Output declaration
@@ -30,8 +31,7 @@ module round_comp_detector
                     assign req_weight_mask[i][n] = (req_weight_i[((n+1)*P_WEIGHT_W-1)-:P_WEIGHT_W] == 0);
                 end
             end
-            assign weight_remain[i] = num_grant_req_i < req_weight_i[((i+1)*P_WEIGHT_W-1)-:P_WEIGHT_W];
-            assign weight_comp_match[i] = (&req_weight_mask[i]) & (~weight_remain[i]);
+            assign weight_comp_match[i] = (&req_weight_mask[i]) & (~req_weight_remain_i[i]);
             assign weight_rst_en[i] = weight_comp_match[i] & grant_i[i];
         end
     endgenerate

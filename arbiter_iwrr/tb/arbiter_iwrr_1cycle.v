@@ -1,3 +1,4 @@
+`timescale 1ns/100ps
 module arbiter_iwrr_1cycle_tb;    
     // Requester number
     localparam P_REQUESTER_NUM                                  = 3;
@@ -41,16 +42,20 @@ module arbiter_iwrr_1cycle_tb;
     initial begin
         req_i <= {P_REQUESTER_NUM{1'b1}};
         grant_ready_i <= 1'b1;
-        #100;
+        #100.1;
         req_i <= 0;
         req_i[0] <= 1'b1;
-        grant_ready_i <= 1'b1;
-        #100;
+        #100.1;
         req_i <= 0;
         req_i[0] <= 1'b1;
         req_i[1] <= 1'b1;
-        #100;
+        grant_ready_i <= 1'b1;
+        #100.1;
         grant_ready_i <= 1'b0;
-        #200; $finish;
+        #200.1; $finish;
+    end
+    
+    initial begin
+        #63.1; grant_ready_i <= 1'b0; 
     end
 endmodule
